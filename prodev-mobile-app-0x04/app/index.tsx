@@ -1,47 +1,30 @@
-import PropertyListing from "@/components/PropertyListing";
-import { styles } from "@/styles/_homestyle";
-import { Feather } from "@expo/vector-icons";
-import { View, Text, TextInput, Image, ScrollView, Dimensions, TouchableHighlight } from "react-native";
-import { FILTERS, SAMPLE_DATA } from "@/constants/data";
+import { View, Text, ImageBackground, Image, TouchableOpacity } from "react-native";
+import { useRouter } from "expo-router";
+import { styles } from "@/styles/_mainstyle";
+import { BACKGROUNDIMAGE, HEROLOGO } from "@/constants";
 
-const Home = () => {
+export default function HomeScreen() {
+  const router = useRouter();
+
   return (
-    <View style={styles.container}>
-      <View style={styles.searchGroup}>
-        <View style={styles.searchFormGroup}>
-          <View style={styles.searchControlGroup}>
-            <Text style={styles.searchFormText}>Where to?</Text>
-            <TextInput style={{ ...styles.searchControl, ...styles.searchFormText }} placeholder="Location . Date . Add guest" />
-          </View>
-          <View style={styles.searchButton}>
-            <Feather name="search" size={24} color="white" />
-          </View>
-        </View>
+    <ImageBackground source={BACKGROUNDIMAGE} style={styles.backgroundImageContainer}>
+      <View style={styles.logoContainer}>
+        <Image source={HEROLOGO} />
       </View>
-
-      <View style={{ height: 72, backgroundColor: "white" }}>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <View style={styles.filterGroup}>
-            {FILTERS.map((filter, index) => (
-              <View style={styles.filterContainer} key={index}>
-                <Image style={{ flex: 1 }} source={require("@/assets/images/mansion.png")} resizeMode="contain" />
-                <Text>{filter}</Text>
-              </View>
-            ))}
-          </View>
-        </ScrollView>
+      <View style={styles.titleContainer}>
+        <Text style={styles.titleText}>Find Your Dream Home</Text>
       </View>
-
-      <ScrollView style={styles.listingContainer}>
-        <PropertyListing listings={SAMPLE_DATA} />
-        <View style={styles.paginationContainer}>
-          <TouchableHighlight style={styles.showMoreButton}>
-            <Text style={styles.showMoreButtonText}>Show more</Text>
-          </TouchableHighlight>
-        </View>
-      </ScrollView>
-    </View>
+      <View style={styles.titleSubTextContainer}>
+        <Text style={styles.titleSubText}>Explore the best properties around the world</Text>
+      </View>
+      <View style={styles.buttonGroup}>
+        <TouchableOpacity style={styles.buttonPrimary} onPress={() => router.push("/join")}>
+          <Text style={styles.buttonPrimaryText}>Join Now</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonSecondary} onPress={() => router.push("/signin")}>
+          <Text style={styles.buttonSecondaryText}>Sign In</Text>
+        </TouchableOpacity>
+      </View>
+    </ImageBackground>
   );
-};
-
-export default Home;
+}
